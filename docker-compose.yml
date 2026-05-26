@@ -1,0 +1,8 @@
+services:
+  pipeline:
+    build: .
+    container_name: modern-data-pipeline
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - .env.dev
