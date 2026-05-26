@@ -44,7 +44,4 @@ jobs:
 
             docker build -t modern-data-pipeline .
 
-            docker run \
-              --name modern-data-pipeline-container \
-              -v $(pwd)/data:/app/data \
-              modern-data-pipeline
+            docker run --name modern-data-pipeline-container -v $(pwd)/data:/app/data modern-data-pipeline
