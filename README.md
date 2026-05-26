@@ -12,7 +12,7 @@ A modern Dockerized data engineering pipeline that:
 - Python
 - Docker
 - Pandas
-- GitHub Actions (future)
+- Automated CD deployment enabled.
 - Airflow/dbt ready
 
 ## Run Locally
