@@ -8,7 +8,7 @@ on:
 jobs:
 
   test-and-build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
@@ -22,7 +22,7 @@ jobs:
 
   deploy-to-dev:
     needs: test-and-build
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Deploy to EC2 DEV Server
