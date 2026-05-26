@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI-CD Pipeline
 
 on:
   push:
@@ -6,8 +6,9 @@ on:
       - develop
 
 jobs:
+
   test-and-build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout Repository
@@ -16,5 +17,36 @@ jobs:
       - name: Build Docker Image
         run: docker build -t modern-data-pipeline .
 
-      - name: Run Pipeline
+      - name: Run Pipeline Test
         run: docker run modern-data-pipeline
+
+  deploy-to-dev:
+    needs: test-and-build
+    runs-on: ubuntu-24.04
+
+    steps:
+
+      - name: Deploy to EC2 DEV Server
+
+        uses: appleboy/ssh-action@v1.0.3
+
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+
+          script: |
+            cd modern-data-pipeline
+
+            git pull origin develop
+
+            docker stop modern-data-pipeline-container || true
+
+            docker rm modern-data-pipeline-container || true
+
+            docker build -t modern-data-pipeline .
+
+            docker run \
+              --name modern-data-pipeline-container \
+              -v $(pwd)/data:/app/data \
+              modern-data-pipeline

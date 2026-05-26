@@ -1,6 +1,6 @@
-# Simple Data Pipeline
+# Modern Data Pipeline
 
-A simple Dockerized data engineering pipeline that:
+A modern Dockerized data engineering pipeline that:
 
 1. Extracts data from a public API
 2. Stores raw JSON data
